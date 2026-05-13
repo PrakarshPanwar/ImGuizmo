@@ -3,7 +3,7 @@
 //
 // The MIT License(MIT)
 //
-// Copyright(c) 2016-2021 Cedric Guillemet
+// Copyright(c) 2016-2026 Cedric Guillemet and contributors
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files(the "Software"), to deal
@@ -25,6 +25,7 @@
 //
 // -------------------------------------------------------------------------------------------
 // History :
+// 2026/05/03 v1.9 release. CMake build system, vcpkg support, many fixes and new features from contributors.
 // 2019/11/03 View gizmo
 // 2016/09/11 Behind camera culling. Scaling Delta matrix not multiplied by source matrix scales. local/world rotation and translation fixed. Display message is incorrect (X: ... Y:...) in local mode.
 // 2016/09/09 Hatched negative axis. Snapping. Documentation update.
@@ -258,6 +259,35 @@ namespace IMGUIZMO_NAMESPACE
    // return true if the cursor is over the operation's gizmo
    IMGUI_API bool IsOver(OPERATION op);
    IMGUI_API void SetGizmoSizeClipSpace(float value);
+
+   // Handle type used by the translate/rotate/scale gizmos.
+   enum MOVETYPE
+   {
+      MT_NONE,
+      MT_MOVE_X,
+      MT_MOVE_Y,
+      MT_MOVE_Z,
+      MT_MOVE_YZ,
+      MT_MOVE_ZX,
+      MT_MOVE_XY,
+      MT_MOVE_SCREEN,
+      MT_ROTATE_X,
+      MT_ROTATE_Y,
+      MT_ROTATE_Z,
+      MT_ROTATE_SCREEN,
+      MT_SCALE_X,
+      MT_SCALE_Y,
+      MT_SCALE_Z,
+      MT_SCALE_XYZ
+   };
+
+   // Returns which handle is actively being dragged, or MT_NONE.
+   IMGUI_API MOVETYPE GetActiveHandleType();
+   // Returns which handle is currently hovered, or MT_NONE.
+   IMGUI_API MOVETYPE GetHoveredHandleType();
+   // Aliases matching the MOVETYPE enum name.
+   IMGUI_API MOVETYPE GetActiveMoveType();
+   IMGUI_API MOVETYPE GetHoveredMoveType();
 
    // Allow axis to flip
    // When true (default), the guizmo axis flip for better visibility
